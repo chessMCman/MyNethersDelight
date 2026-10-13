@@ -13,8 +13,14 @@ on:
   pull_request:
     branches: [ "Neo-1.21+" ]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'v1.10.4-fix'
+        required: true
+        default: 'v1.0.0'
 
-  
+permissions:
+     contents: write
 jobs:
   build:
 
