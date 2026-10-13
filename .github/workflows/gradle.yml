@@ -46,10 +46,12 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
-        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
+        # 严格限制：只有手动触发（workflow_dispatch）时才发布
+        if: github.event_name == 'workflow_dispatch'
         with:
-          tag_name: ${{ github.event.inputs.version || github.ref_name }}
-          name: Release ${{ github.event.inputs.version || github.ref_name }}
+          # 直接使用手动输入的版本号，不再使用分支名兜底
+          tag_name: ${{ github.event.inputs.version }}
+          name: Release ${{ github.event.inputs.version }}
           draft: false
           prerelease: false
           files: "**/build/libs/*.jar"
