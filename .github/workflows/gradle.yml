@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: '1.10.14-fix'
+        description: 'neoforge'
         required: true
         default: 'v1.0.0'
 
