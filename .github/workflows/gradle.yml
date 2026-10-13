@@ -54,7 +54,17 @@ jobs:
         name: MyNethersDelight-Jar
         # 关键点4：使用通配符匹配所有子模块下的 jar，绝不漏掉
         path: "**/build/libs/*.jar"
-
+     - name: Create Release
+      uses: softprops/action-gh-release@v2
+      if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
+      with:
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
+        name: Release ${{ github.event.inputs.version || github.ref_name }}
+        draft: false
+        prerelease: false
+        files: "**/build/libs/*.jar"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
     #
